@@ -10,6 +10,11 @@ spring:
       url: jdbc:mysql://localhost:3306/reggie?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: 2534891955!
+  redis:
+    host: localhost
+    port: 6379
+    password: root@181381
+    database: 0
 mybatis-plus:
   configuration:
     #address_book ---> AddressBook (含下划线的表名映射到实体类名，就需开启下面的第一行)
