@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * 套餐管理
  */
 @Slf4j   //日志
-@RestController  //Controller层 + ResponseBody
+@RestController   //Controller层 + ResponseBody
 @RequestMapping("/setmeal")
 public class SetmealDishController {
     @Autowired
