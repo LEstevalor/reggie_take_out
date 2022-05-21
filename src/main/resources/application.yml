@@ -15,6 +15,9 @@ spring:
     port: 6379
 #    password: root@181381
     database: 0
+  cache:
+    redis:
+      time-to-live: 1800000 #设置缓存数据过期时间
 mybatis-plus:
   configuration:
     #address_book ---> AddressBook (含下划线的表名映射到实体类名，就需开启下面的第一行)

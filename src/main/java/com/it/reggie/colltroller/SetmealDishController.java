@@ -17,6 +17,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.el.lang.ELArithmetic;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +49,7 @@ public class SetmealDishController {
      * @return
      */
     @PostMapping
+    @CacheEvict(value = "setmealCache", allEntries = true)   //表示删除setmealCache所有的数据（keys）
     public R<String> save(@RequestBody SetmealDto setmealDto) {
         log.info("套餐信息：{}",setmealDto);
         //设计两张表的操作，与之前的操作相同，我们把方法体写到service层
@@ -101,6 +105,7 @@ public class SetmealDishController {
      * @return
      */
     @DeleteMapping      //↓用于将方法的参数与Web请求的传递的参数进行绑定
+    @CacheEvict(value = "setmealCache", allEntries = true)   //表示删除setmealCache所有的数据（keys）
     public R<String> delete(@RequestParam List<Long> ids) {   //Long[] ids也行
         log.info("ids: {}",ids);
         setmealService.removeWithDish(ids);   //涉及两表操作setmeal & setmeal_dish，service层自写操作
@@ -115,6 +120,7 @@ public class SetmealDishController {
      * @return
      */
     @GetMapping("/list")
+    @Cacheable(value = "setmealCache", key = "#setmeal.categoryId + '_' + #setmeal.status")
     public R<List<Setmeal>> list(Setmeal setmeal) {
         //取出
         LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();      //↓（忽略null判断SQL），前端参数传入的status是1（起售状态）
